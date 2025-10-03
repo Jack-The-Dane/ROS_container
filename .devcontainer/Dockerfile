@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
   ros-jazzy-ros2-control \
   ros-jazzy-ros2-controllers \
   ros-jazzy-plotjuggler-ros \
+  ros-jazzy-mavros \
   gedit \
   python3-pip \
   python3-venv \
-  ros-jazzy-ur \
   python3-pandas
