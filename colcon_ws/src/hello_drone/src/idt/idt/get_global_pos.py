@@ -25,24 +25,24 @@ class ros_node_class(Node):
         )
 
         # timers
-        self.timer = self.create_timer(0.5, self.timer_update)
+        self.timer = self.create_timer(2, self.timer_update)
         self.raw_file = open("raw_pos.csv", "w")
-        self.raw_file.write("latitude, longitude, altitude \n")
+        self.raw_file.write("timestamp, latitude, longitude, altitude \n")
         self.global_file = open("global_pos.csv", "w")
-        self.global_file.write("latitude, longitude, altitude \n")
+        self.global_file.write("timestamp, latitude, longitude, altitude \n")
 
     def __del__(self):
         self.raw_file.close()
         self.global_file.close()
  
-    def on_global_pos_msg(self, msg):
+    def on_global_pos_msg(self, msg:NavSatFix):
         self.get_logger().info('Got position: %.6f %.6f %.3f ' % (msg.latitude, msg.longitude, msg.altitude))
-        s = f"{msg.latitude}, {msg.longitude}, {msg.altitude} \n"
+        s = f"{msg.header.stamp.sec + (float(msg.header.stamp.nanosec)/(10**9))}, {msg.latitude}, {msg.longitude}, {msg.altitude} \n"
         self.global_file.write(s)
 
     def on_global_pos_raw_msg(self, msg):
         self.get_logger().info('Got raw position: %.6f %.6f %.3f ' % (msg.latitude, msg.longitude, msg.altitude))
-        s = f"{msg.latitude}, {msg.longitude}, {msg.altitude} \n"
+        s = f"{msg.header.stamp.sec + (float(msg.header.stamp.nanosec)/(10**9))}, {msg.latitude}, {msg.longitude}, {msg.altitude} \n"
         self.raw_file.write(s)
 
     def timer_update(self):

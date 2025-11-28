@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
                  'get_global_pos = idt.get_global_pos:main',
                  'hello_drone = idt.hello_drone:main',
+                 'get_radio_sig = idt.get_radio_sig:main',
         ],
     },
 )
